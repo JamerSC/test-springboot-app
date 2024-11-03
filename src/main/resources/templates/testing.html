@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Testing</title>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
+</head>
+<body>
+    <h1 th:text="${message}"></h1>
+
+    <form th:action="@{/submitForm}" method="post">
+        <label for="contacts">Contacts:</label>
+        <input id="contacts" name="contacts" class="tagify-input" type="text">
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const formattedUsers = [
+                { value: "John Doe" },
+                { value: "Jane Smith" },
+                { value: "Robert Brown" }
+            ];
+
+            // Initialize Tagify on the input
+            const input = document.getElementById("contacts");
+            const tagify = new Tagify(input, {
+                enforceWhitelist: true,
+                whitelist: formattedUsers,
+                dropdown: {
+                    enabled: 0, // 0 enables it on focus
+                    maxItems: 10, // max items to display in dropdown
+                }
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Petty Cash Test</title>
+    <!-- Bootstrap Framework: https://getbootstrap.com/ -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@latest/dist/tagify.min.js"></script>
+</head>
+<body>
+    <h4 th:text="${petty}"></h4>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">MyApp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <!--<a class="nav-link" th:href="@{/home}">Home</a>-->
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/test/accounts}">Accounts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Petty Cash</a>
+                    </li>
+                    <li class="nav-item">
+                        <!--<a class="nav-link" th:href="@{/contact}">Contact</a>-->
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h3>Petty Cash</h3>
+        <a th:href="@{/test/petty-cash-form}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Create Petty Cash</a>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Activity Description</th>
+                <th>Activity Category</th>
+                <th>SOA Category</th>
+                <th>Amount</th>
+                <th>Account(s)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pettyCash : ${pettyCashRecords}">
+                <td th:text="${#dates.format(pettyCash.date, 'dd MMMM yyyy')}"></td>
+                <td th:text="${pettyCash.activityDescription}"></td>
+                <td th:text="${pettyCash.activityCategory}"></td>
+                <td th:text="${pettyCash.soaCategory}"></td>
+                <td th:text="${pettyCash.amount}"></td>
+                <td>
+                    <ul>
+                        <li th:each="account : ${pettyCash.accounts}" th:text="${account.name} + ' (' + ${account.email} + ')'"></li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
