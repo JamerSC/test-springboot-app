@@ -3,6 +3,7 @@ package com.springboot.fxn.testing.controller;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springboot.fxn.testing.dto.AccountDto;
 import com.springboot.fxn.testing.dto.PettyCashDto;
 import com.springboot.fxn.testing.model.PettyCash;
 import com.springboot.fxn.testing.model.Account;
@@ -12,10 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -32,14 +30,21 @@ public class TestController {
 
     @GetMapping("/accounts")
     public String indexPage(Model model) {
-        List<Account> listOfAccounts = accountService.getAllAccounts();
+        List<AccountDto> listOfAccounts = accountService.getAllAccounts();
         model.addAttribute("listOfAccounts", listOfAccounts);
-        return "index";
+        return "accounts";
+    }
+
+    @GetMapping("/{id}/view-account")
+    public String viewAccount(@PathVariable(value = "id") Long id, Model model) {
+        AccountDto account = accountService.getAccountId(id);
+        model.addAttribute("account", account);
+        return "account-view";
     }
 
     @GetMapping("/petty-cash")
     public String pettyCashPage(Model model) {
-        List<PettyCash> pettyCashRecords = pettyCashService.getAllPettyCash();
+        List<PettyCashDto> pettyCashRecords = pettyCashService.getAllPettyCash();
         model.addAttribute("pettyCashRecords", pettyCashRecords);
         return "petty-cash";
     }
@@ -47,7 +52,7 @@ public class TestController {
     @GetMapping("/petty-cash-form")
     public String pettyCashFormPage(Model model) {
         model.addAttribute("pettyCash", new PettyCashDto());
-        List<Account> listOfAccounts = accountService.getAllAccounts();
+        List<AccountDto> listOfAccounts = accountService.getAllAccounts();
         model.addAttribute("listOfAccounts", accountService.getAllAccounts());
         return "petty-cash-form";
     }

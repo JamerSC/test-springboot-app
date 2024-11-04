@@ -9,12 +9,17 @@ public class WebConfig implements WebMvcConfigurer {
 
     private final StringToSetLongConvert stringToSetLongConvert;
 
-    public WebConfig(StringToSetLongConvert stringToSetLongConvert) {
+    private final StringToAccountDtoSetConverter stringToAccountDtoSetConverter;
+
+    public WebConfig(StringToSetLongConvert stringToSetLongConvert,
+                     StringToAccountDtoSetConverter stringToAccountDtoSetConverter) {
         this.stringToSetLongConvert = stringToSetLongConvert;
+        this.stringToAccountDtoSetConverter = stringToAccountDtoSetConverter;
     }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(stringToSetLongConvert);
+        registry.addConverter(stringToAccountDtoSetConverter);
     }
 }

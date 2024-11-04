@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PettyCashService {
 
-    List<PettyCash> getAllPettyCash();
+    List<PettyCashDto> getAllPettyCash();
     PettyCashDto getPettyCashById(Long id);
     void save(PettyCashDto dto);
     void deletePettyCashById(Long id);

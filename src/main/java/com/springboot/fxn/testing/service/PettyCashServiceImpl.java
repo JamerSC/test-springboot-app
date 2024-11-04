@@ -2,6 +2,7 @@ package com.springboot.fxn.testing.service;
 
 import com.springboot.fxn.testing.dto.AccountDto;
 import com.springboot.fxn.testing.dto.PettyCashDto;
+import com.springboot.fxn.testing.mapper.PettyCashMapper;
 import com.springboot.fxn.testing.model.Account;
 import com.springboot.fxn.testing.model.PettyCash;
 import com.springboot.fxn.testing.repository.AccountRepo;
@@ -30,34 +31,42 @@ public class PettyCashServiceImpl implements PettyCashService {
     private AccountRepo accountRepo;
 
     @Override
-    public List<PettyCash> getAllPettyCash() {
-        return pettyCashRepo.findAll();
+    public List<PettyCashDto> getAllPettyCash() {
+        return pettyCashRepo.findAll().stream()
+                .map(PettyCashMapper::pettyCashToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public PettyCashDto getPettyCashById(Long id) {
-        PettyCash pettyCashId = pettyCashRepo.findById(id)
+        PettyCash pettyCash = pettyCashRepo.findById(id)
                 .orElseThrow(()-> new RuntimeException("Petty Cash ID not found!"));
-        if (pettyCashId != null) {
-            PettyCashDto dto = new PettyCashDto();
-            BeanUtils.copyProperties(pettyCashId, dto);
-            return dto;
-        }
-        return null;
+        return PettyCashMapper.pettyCashToDto(pettyCash);
     }
 
     @Override
     public void save(PettyCashDto dto) {
-        PettyCash pettyCash = new PettyCash();
+        PettyCash pettyCash = PettyCashMapper.pettyCashToEntity(dto);
 
+        /* PettyCashDto Set<Long> AccountIds;
         Set<Account> accounts = dto.getAccountIds().stream()
                                     .map(accountRepo::findById)
                                     .filter(Optional::isPresent)
                                     .map(Optional::get)
                                     .collect(Collectors.toSet());
         pettyCash.setAccounts(accounts);
+        */
 
-        BeanUtils.copyProperties(dto, pettyCash);
+        // Map AccountDto to Account by fetching Account entities from the database using the IDs
+        Set<Account> accounts = dto.getAccounts().stream()
+                .map(AccountDto::getId)
+                .map(accountRepo::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+        pettyCash.setAccounts(accounts);
+
+        //BeanUtils.copyProperties(dto, pettyCash);
         pettyCashRepo.save(pettyCash);
     }
 

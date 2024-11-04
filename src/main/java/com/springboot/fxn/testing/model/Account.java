@@ -27,6 +27,6 @@ public class Account {
     private String email;
 
     @ManyToMany(mappedBy = "accounts")
-    @JsonIgnore
+    //@JsonIgnore
     private Set<PettyCash> pettyCash;
 }
