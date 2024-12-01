@@ -1,2 +1,4 @@
-# testapp-springboot-spring-mvc
-Testapp - Functional, library, &amp; other integration for testing.
+# test-springboot-app
+# Testing for new features
+# Open Source Libraries
+# Integration
