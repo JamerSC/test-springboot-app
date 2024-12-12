@@ -1,9 +1,7 @@
 package com.springboot.fxn.testing.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
 import java.util.Set;
@@ -12,7 +10,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class PettyCashDto {
 
     private Long id;
@@ -22,6 +19,7 @@ public class PettyCashDto {
     private String activityCategory;
     private String soaCategory;
     private Double amount;
-    // private Set<Long> accountIds;
-    private Set<AccountDto> accounts;
+    private Set<Long> accountIds; // Custom mapping to store account IDs'
+    //private Set<Long> accountIds; // Keep accountIds for IDs
+    private Set<String> accountDetails; // Add a new field to store account details (like name and email)
 }

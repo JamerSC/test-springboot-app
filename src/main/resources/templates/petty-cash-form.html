@@ -66,31 +66,31 @@
 
       <!-- Select Option Add Multiple Accounts -->
       <!--<div class="form-group">
-        <label for="accounts">Accounts</label>
-        <select class="form-control" id="accounts" th:field="*{accountIds}" multiple required>
+        <label for="clientAccounts">Accounts</label>
+        <select class="form-control" id="clientAccounts" th:field="*{accountIds}" multiple required>
           <option value="" selected>Select Users</option>
-          <option th:each="account : ${listOfAccounts}" th:value="${account.id}" th:text="${account.name} + ' (' + ${account.email} + ')'"></option>
+          <option th:each="clientAccount : ${listOfAccounts}" th:value="${clientAccount.id}" th:text="${clientAccount.name} + ' (' + ${clientAccount.email} + ')'"></option>
         </select>
       </div>-->
 
       <!-- Input Text Field Tagify lib -->
       <!--<div class="form-group">
-        <label for="accounts">Accounts</label>
-        <input type="text" class="form-control" id="accounts" required>
+        <label for="clientAccounts">Accounts</label>
+        <input type="text" class="form-control" id="clientAccounts" required>
         <input type="hidden" id="accountsJson" th:field="*{accountIds}" />
       </div>-->
 
       <div class="form-group">
-        <label for="accounts">Accounts</label>
-        <input type="text" class="form-control" id="accounts" required>
-        <input type="hidden" id="accountsJson" th:field="*{accounts}" />
+        <label for="clientAccounts">Accounts</label>
+        <input type="text" class="form-control" id="clientAccounts" required>
+        <input type="hidden" id="accountsJson" th:field="*{accountDetails}" />
       </div>
 
       <!-- Input TextArea Field Tagify lib -->
       <!--<div class="form-group">
-        <label for="accounts">Accounts</label>
-        <textarea class="form-control" id="accounts" rows="4" cols="6" placeholder="Add accounts ..." required></textarea>
-        <input type="hidden" id="accountsJson" th:field="*{accounts}" />
+        <label for="clientAccounts">Accounts</label>
+        <textarea class="form-control" id="clientAccounts" rows="4" cols="6" placeholder="Add clientAccounts ..." required></textarea>
+        <input type="hidden" id="accountsJson" th:field="*{clientAccounts}" />
       </div>-->
 
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -100,12 +100,12 @@
   <!--<script th:inline="javascript">
     /*<![CDATA[*/
       const accountData = /*[[${listOfAccounts}]]*/ [];
-      const formattedAccounts = accountData.map(account => ({
-          id: account.id,
-          value: account.name
+      const formattedAccounts = accountData.map(clientAccount => ({
+          id: clientAccount.id,
+          value: clientAccount.name
       }));
 
-      const input = document.getElementById("accounts");
+      const input = document.getElementById("clientAccounts");
       const tagify = new Tagify(input, {
           enforceWhitelist: true,
           whitelist: formattedAccounts,
@@ -132,13 +132,13 @@
     /*<![CDATA[*/
       $(document).ready(function() {
           const accountData = /*[[${listOfAccounts}]]*/ [];
-          const formattedAccounts = accountData.map(account => ({
-              id: account.id,
-              value: account.name
+          const formattedAccounts = accountData.map(clientAccount => ({
+              id: clientAccount.id,
+              value: clientAccount.name
           }));
 
           // Initialize Tagify on the input
-          const input = $("#accounts")[0];
+          const input = $("#clientAccounts")[0];
           const tagify = new Tagify(input, {
               enforceWhitelist: true,
               whitelist: formattedAccounts,
@@ -165,13 +165,13 @@
   <script th:inline="javascript">
       $(document).ready(function() {
           const accountData = /*[[${listOfAccounts}]]*/ [];
-          const formattedAccounts = accountData.map(account => ({
-              id: account.id,
-              value: account.name
+          const formattedAccounts = accountData.map(clientAccount => ({
+              id: clientAccount.id,
+              value: clientAccount.name
           }));
 
           // Initialize Tagify on the input
-          const input = $("#accounts")[0];
+          const input = $("#clientAccounts")[0];
           const tagify = new Tagify(input, {
               enforceWhitelist: true,
               whitelist: formattedAccounts,

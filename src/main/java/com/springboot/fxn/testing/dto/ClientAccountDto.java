@@ -2,14 +2,16 @@ package com.springboot.fxn.testing.dto;
 
 import lombok.*;
 
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-public class AccountDto {
+public class ClientAccountDto {
 
     private Long id;
     private String name;
     private String email;
+    private Set<PettyCashDto> pettyCash;
 }

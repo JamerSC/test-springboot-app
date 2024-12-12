@@ -1,35 +1,22 @@
 package com.springboot.fxn.testing.mapper;
 
-import com.springboot.fxn.testing.dto.AccountDto;
-import com.springboot.fxn.testing.model.Account;
-import org.springframework.stereotype.Component;
+import com.springboot.fxn.testing.dto.ClientAccountDto;
+import com.springboot.fxn.testing.model.ClientAccount;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Service;
 
-@Component
-public class AccountMapper {
+import java.util.List;
 
-    public static AccountDto accountToDto(Account account) {
-        if (account == null) {
-            return null;
-        }
+@Service
+@Mapper()
+public interface AccountMapper {
 
-        AccountDto dto = new AccountDto();
-        dto.setId(account.getId());
-        dto.setName(account.getName());
-        dto.setEmail(account.getEmail());
+    AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
-        return dto;
-    }
+    ClientAccountDto toAccountDto(ClientAccount clientAccount);
 
-    public static Account accountToEntity(AccountDto dto) {
-        if (dto == null) {
-            return null;
-        }
+    ClientAccount toAccountEntity(ClientAccountDto dto);
 
-        Account account = new Account();
-        account.setId(dto.getId());
-        account.setName(dto.getName());
-        account.setEmail(dto.getEmail());
-
-        return account;
-    }
+    List<ClientAccountDto> toListClientAccountDto(List<ClientAccount> clientAccounts);
 }

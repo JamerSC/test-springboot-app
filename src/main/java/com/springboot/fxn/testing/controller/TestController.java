@@ -1,12 +1,7 @@
 package com.springboot.fxn.testing.controller;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springboot.fxn.testing.dto.AccountDto;
+import com.springboot.fxn.testing.dto.ClientAccountDto;
 import com.springboot.fxn.testing.dto.PettyCashDto;
-import com.springboot.fxn.testing.model.PettyCash;
-import com.springboot.fxn.testing.model.Account;
 import com.springboot.fxn.testing.service.PettyCashService;
 import com.springboot.fxn.testing.service.AccountService;
 import lombok.AllArgsConstructor;
@@ -16,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/test")
@@ -25,19 +19,19 @@ public class TestController {
 
     @Autowired
     private AccountService accountService;
-    @Autowired
+    @Autowired(required = true)
     private PettyCashService pettyCashService;
 
     @GetMapping("/accounts")
     public String indexPage(Model model) {
-        List<AccountDto> listOfAccounts = accountService.getAllAccounts();
+        List<ClientAccountDto> listOfAccounts = accountService.getAllAccounts();
         model.addAttribute("listOfAccounts", listOfAccounts);
         return "accounts";
     }
 
     @GetMapping("/{id}/view-account")
     public String viewAccount(@PathVariable(value = "id") Long id, Model model) {
-        AccountDto account = accountService.getAccountId(id);
+        ClientAccountDto account = accountService.getAccountId(id);
         model.addAttribute("account", account);
         return "account-view";
     }
@@ -52,8 +46,8 @@ public class TestController {
     @GetMapping("/petty-cash-form")
     public String pettyCashFormPage(Model model) {
         model.addAttribute("pettyCash", new PettyCashDto());
-        List<AccountDto> listOfAccounts = accountService.getAllAccounts();
-        model.addAttribute("listOfAccounts", accountService.getAllAccounts());
+        List<ClientAccountDto> listOfAccounts = accountService.getAllAccounts();
+        model.addAttribute("listOfAccounts", listOfAccounts);
         return "petty-cash-form";
     }
 
@@ -61,6 +55,18 @@ public class TestController {
     public String savePettyCash(@ModelAttribute("pettyCash") PettyCashDto pettyCash) {
         pettyCashService.save(pettyCash);
         return "redirect:/test/petty-cash";
+    }
+
+    @GetMapping("/account-form")
+    public String accountFormPage(Model model) {
+        model.addAttribute("account", new ClientAccountDto());
+        return "account-form";
+    }
+
+    @PostMapping("/save-account")
+    public String saveAccount(@ModelAttribute("account") ClientAccountDto dto) {
+        accountService.save(dto);
+        return "redirect:/test/accounts";
     }
 
     @GetMapping("/testing")
