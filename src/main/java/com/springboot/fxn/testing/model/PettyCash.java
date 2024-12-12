@@ -1,12 +1,9 @@
 package com.springboot.fxn.testing.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -44,6 +41,5 @@ public class PettyCash {
             joinColumns = @JoinColumn(name = "petty_cash_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id")
     )
-    //@JsonBackReference
-    private Set<Account> accounts;
+    private Set<ClientAccount> accounts;
 }

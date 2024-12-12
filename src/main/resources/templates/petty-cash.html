@@ -61,8 +61,13 @@
                 <td th:text="${pettyCash.soaCategory}"></td>
                 <td th:text="${pettyCash.amount}"></td>
                 <td>
+                    <!--<ul>
+                        <li th:each="account : ${pettyCash.accountIds}" th:text="${account.name} + ' (' + ${account.email} + ')'"></li>
+                    </ul>-->
                     <ul>
-                        <li th:each="account : ${pettyCash.accounts}" th:text="${account.name} + ' (' + ${account.email} + ')'"></li>
+                        <li th:each="accountDetail : ${pettyCash.accountDetails}">
+                            <span th:text="${accountDetail}"></span>
+                        </li>
                     </ul>
                 </td>
             </tr>

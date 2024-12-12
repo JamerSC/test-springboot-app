@@ -1,6 +1,5 @@
 package com.springboot.fxn.testing.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString(exclude = "pettyCash")
-public class Account {
+public class ClientAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +26,5 @@ public class Account {
     private String email;
 
     @ManyToMany(mappedBy = "accounts")
-    //@JsonIgnore
     private Set<PettyCash> pettyCash;
 }
