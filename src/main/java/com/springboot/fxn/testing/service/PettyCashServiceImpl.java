@@ -43,7 +43,7 @@ public class PettyCashServiceImpl implements PettyCashService {
 
         return pettyCashList.stream()
                 .map(pettyCash -> {
-                    PettyCashDto pettyCashDto = pettyCashMapper.toPettyCashDto(pettyCash);
+                    PettyCashDto pettyCashDto = pettyCashMapper.INSTANCE.toPettyCashDto(pettyCash);
 
                     // Fetch associated ClientAccount entities based on accountIds
                     Set<Long> accountIds = pettyCashDto.getAccountIds();
@@ -68,13 +68,13 @@ public class PettyCashServiceImpl implements PettyCashService {
         return pettyCashMapper.toPettyCashDto(pettyCash);*/
 
         return pettyCashRepo.findById(id)
-                .map(pettyCashMapper::toPettyCashDto).
+                .map(pettyCashMapper.INSTANCE::toPettyCashDto).
                 orElseThrow(() -> new RuntimeException("Petty cash ID not found!"));
     }
 
     @Override
     public void save(PettyCashDto dto) {
-        PettyCash pettyCash = pettyCashMapper.toPettyCashEntity(dto);
+        PettyCash pettyCash = pettyCashMapper.INSTANCE.toPettyCashEntity(dto);
 
         // Map AccountDto to Account by fetching Account entities from the database using the IDs
         Set<ClientAccount> clientAccounts = dto.getAccountIds()

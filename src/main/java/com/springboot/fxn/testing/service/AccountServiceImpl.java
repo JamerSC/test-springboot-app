@@ -34,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
                 .collect(Collectors.toList());*/
         // After
         List<ClientAccount> accounts = accountRepo.findAll();
-        return accountMapper.toListClientAccountDto(accounts);
+        return accountMapper.INSTANCE.toListClientAccountDto(accounts);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 
         // After
         return accountRepo.findById(id)
-                .map(accountMapper::toAccountDto)
+                .map(accountMapper.INSTANCE::toAccountDto)
                 .orElseThrow(() -> new RuntimeException("Client Account ID Not Found!"));
     }
 
@@ -58,7 +58,7 @@ public class AccountServiceImpl implements AccountService {
         accountRepo.save(clientAccount);*/
 
         // After
-        accountRepo.save(accountMapper.toAccountEntity(dto));
+        accountRepo.save(accountMapper.INSTANCE.toAccountEntity(dto));
     }
 
     @Override

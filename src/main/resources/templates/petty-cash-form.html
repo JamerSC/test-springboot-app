@@ -83,7 +83,7 @@
       <div class="form-group">
         <label for="clientAccounts">Accounts</label>
         <input type="text" class="form-control" id="clientAccounts" required>
-        <input type="hidden" id="accountsJson" th:field="*{accountDetails}" />
+        <input type="hidden" id="accountsJson" th:field="*{accountIds}" />
       </div>
 
       <!-- Input TextArea Field Tagify lib -->
@@ -184,12 +184,14 @@
           // Handle 'add' and 'remove' events
           tagify.on('add', function() {
               const values = tagify.value.map(tag => tag.id);
-              $("#accountsJson").val(JSON.stringify(values));
+              $("#accountsJson").val(values.join(','));
+              console.log("Accounts added in Add Modal:", values.join(','));
           });
 
           tagify.on('remove', function() {
               const values = tagify.value.map(tag => tag.id);
-              $("#accountsJson").val(JSON.stringify(values));
+              $("#accountsJson").val(values.join(','));
+              console.log("Accounts added in Remove Modal:", values.join(','));
           });
       });
   </script>

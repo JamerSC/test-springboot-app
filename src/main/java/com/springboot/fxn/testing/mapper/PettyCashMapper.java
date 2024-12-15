@@ -1,6 +1,5 @@
 package com.springboot.fxn.testing.mapper;
 
-import com.springboot.fxn.testing.dto.ClientAccountDto;
 import com.springboot.fxn.testing.dto.PettyCashDto;
 import com.springboot.fxn.testing.model.ClientAccount;
 import com.springboot.fxn.testing.model.PettyCash;
@@ -18,9 +17,8 @@ public interface PettyCashMapper {
 
     PettyCashMapper INSTANCE = Mappers.getMapper(PettyCashMapper.class);
 
-    //@Mapping(target = "accountIds", source = "accounts", qualifiedByName = "mapAccountsToIds" )
-    @Mapping(target = "accountIds", expression = "java(mapAccountsToIds(pettyCash.getAccounts()))")  // Custom mapping to map accounts to accountIds
-
+    @Mapping(target = "accountIds", expression = "java(mapAccountsToIds(pettyCash.getAccounts()))")
+    @Mapping(target = "accountDetails", expression = "java(mapAccountsToDetails(pettyCash.getAccounts()))")
     PettyCashDto toPettyCashDto(PettyCash pettyCash);
 
     @Mapping(target = "accounts", source = "accountIds", qualifiedByName = "mapIdsToAccounts")
@@ -28,8 +26,7 @@ public interface PettyCashMapper {
 
     List<PettyCashDto> toPettyCashListDto(List<PettyCash> pettyCashList);
 
-    // Custom mapping method to map account to account Ids
-    //@Named("mapAccountsToIds")
+    // Custom mapping to map accounts to account IDs
     default Set<Long> mapAccountsToIds(Set<ClientAccount> clientAccounts) {
         if (clientAccounts == null) {
             return null;
@@ -39,7 +36,17 @@ public interface PettyCashMapper {
                 .collect(Collectors.toSet());
     }
 
-    // custom mapping method to map account IDs to Account Entities
+    // Custom mapping to map accounts to account details (e.g., names or emails)
+    default Set<String> mapAccountsToDetails(Set<ClientAccount> clientAccounts) {
+        if (clientAccounts == null) {
+            return null;
+        }
+        return clientAccounts.stream()
+                .map(account -> account.getName() + " (" + account.getEmail() + ")")
+                .collect(Collectors.toSet());
+    }
+
+    // Custom mapping to map account IDs to Account entities
     @Named("mapIdsToAccounts")
     default Set<ClientAccount> mapIdsToAccounts(Set<Long> accountIds) {
         if (accountIds == null) {
