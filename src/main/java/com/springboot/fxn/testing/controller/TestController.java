@@ -57,6 +57,21 @@ public class TestController {
         return "redirect:/test/petty-cash";
     }
 
+    @GetMapping("/{id}/edit-petty-cash")
+    public String editPettyCashFormPage(@PathVariable(value = "id") Long id,
+                                        Model model) {
+        PettyCashDto pettyCash = pettyCashService.getPettyCashById(id);
+        model.addAttribute("pettyCash", pettyCash);
+        model.addAttribute("listOfAccounts", accountService.getAllAccounts());
+        return "edit-petty-cash-form";
+    }
+
+    @PostMapping("/edit-petty-cash")
+    public String updatePettyCash(@ModelAttribute("pettyCash") PettyCashDto pettyCash) {
+        pettyCashService.update(pettyCash);
+        return "redirect:/test/petty-cash";
+    }
+
     @GetMapping("/account-form")
     public String accountFormPage(Model model) {
         model.addAttribute("account", new ClientAccountDto());
