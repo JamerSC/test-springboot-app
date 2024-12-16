@@ -86,33 +86,6 @@ public class PettyCashServiceImpl implements PettyCashService {
 
         pettyCashRepo.save(pettyCash);
     }
-
-    @Override
-    public void update(PettyCashDto dto) {
-        // Fetch the existing PettyCash record
-        PettyCash pettyCash = pettyCashRepo.findById(dto.getId())
-                .orElseThrow(() -> new RuntimeException("Petty Cash ID not found!"));
-
-        // Update fields from the DTO
-        // PettyCash pettyCash = pettyCashMapper.INSTANCE.toPettyCashEntity(dto);
-
-        pettyCash.setDate(dto.getDate());
-        pettyCash.setActivityDescription(dto.getActivityDescription());
-        pettyCash.setAmount(dto.getAmount());
-
-        // Update associated accounts
-        Set<ClientAccount> updatedAccounts = dto.getAccountIds()
-                .stream()
-                .map(accountRepo::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-        pettyCash.setAccounts(updatedAccounts);
-
-        // Save the updated PettyCash entity
-        pettyCashRepo.save(pettyCash);
-    }
-
     @Override
     public void deletePettyCashById(Long id) {
         pettyCashRepo.deleteById(id);
