@@ -10,5 +10,7 @@ public interface PettyCashService {
     List<PettyCashDto> getAllPettyCash();
     PettyCashDto getPettyCashById(Long id);
     void save(PettyCashDto dto);
+
+    void update(PettyCashDto dto);
     void deletePettyCashById(Long id);
 }
